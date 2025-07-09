@@ -1,8 +1,12 @@
-# React + Vite
+# About dgilli/simple-checkout-system
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A glorified calculator for quick self-checkout, built as a simple React-based cashier application that allows rapid product selection, real-time total calculation, and easy management of selected items.
 
-Currently, two official plugins are available:
+## Roadmap
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [x] Simple Cashier UI
+- [x] Installable PWA
+- [ ] Inventory management
+- [ ] Offline ready
+- [ ] Transaction logging
+- [ ] Twint integration
