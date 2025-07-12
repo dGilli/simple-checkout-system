@@ -14,7 +14,8 @@ const ProductList: React.FC<ProductListProps> = ({
             No products found. Try a different search or category.
         </div>;
     }
-    return <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    //return <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 h-full gap-4 content-start overflow-y-scroll">
+    return <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 content-start">
         {products.map(product => <ProductItem key={product.id} product={product} onAddProduct={onAddProduct} />)}
     </div>;
 };

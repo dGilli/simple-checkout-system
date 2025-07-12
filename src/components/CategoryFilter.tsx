@@ -10,7 +10,7 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
     onSelectCategory
 }) => {
     return <div className="flex-shrink-0">
-        <select value={activeCategory} onChange={e => onSelectCategory(e.target.value)} className="w-full sm:w-48 p-2 border border-gray-300 rounded-md bg-white" aria-label="Filter by category">
+        <select value={activeCategory} onChange={e => onSelectCategory(e.target.value)} className="w-full h-full sm:w-48 p-2 border border-gray-300 rounded-md bg-white" aria-label="Filter by category">
             {categories.map(category => <option key={category} value={category}>
                 {category.charAt(0).toUpperCase() + category.slice(1)}
             </option>)}
