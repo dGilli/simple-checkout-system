@@ -1,4 +1,10 @@
-DEV_PORT ?= 3000
+APP_NAME = simple-checkout-system
+REPO_URL = https://github.com/dGilli/$(APP_NAME)
+PRODUCTION_URL = https://simple-checkout-system.fly.dev
+DEV_PORT = 3000
+DEV_URL = http://localhost:$(DEV_PORT)
+DEV_BROWSER = cr
+OPEN_URL = @command -v xdg-open >/dev/null && xdg-open $1 || open $1
 
 # ==================================================================================== #
 # HELPERS
@@ -52,12 +58,63 @@ tidy: dev
 ## dev: run the application
 .PHONY: dev
 dev:
-	docker run --rm -it -p $(DEV_PORT):$(DEV_PORT) -v $(PWD):/usr/src/app \
-		$$(docker build -q . --target build) \
-		npm run -- dev --host "0.0.0.0" --port $(DEV_PORT)
+	if [ ! "$$(docker ps -qf name=${APP_NAME})" ]; then \
+		test $$(docker image list -aqf reference=$(APP_NAME)) || docker build -t $(APP_NAME) . --target dev; \
+		test $$(docker container ls -aqf name=$(APP_NAME)) && docker container rm -f $(APP_NAME); \
+		docker run --rm -itp $(DEV_PORT):$(DEV_PORT) -v $(PWD):/usr/src/app --name $(APP_NAME) $(APP_NAME) dev $(DEV_PORT); \
+	fi
 
-dev/open:
-	open -u http://localhost:$(DEV_PORT) 2>/dev/null
+## dev/logs: connect to running application logs
+.PHONY: dev/logs
+dev/logs: dev
+	docker logs -ft $(APP_NAME)
 
+## dev/open: open the application
+.PHONY: dev/open
+dev/open: dev
+	npx playwright open -b $(DEV_BROWSER) $(DEV_URL) --viewport-size "768, 1024"
+
+## dev/connect: connect with the dev container
+.PHONY: dev/connect
+dev/connect: dev
+	docker exec -it $(APP_NAME) sh
+
+
+# ==================================================================================== #
+# OPERATIONS
+# ==================================================================================== #
+
+## clean: clean the local environment
+.PHONY: clean
+clean: confirm
+	docker rm -fv $(APP_NAME)
+	docker rmi -f $(APP_NAME)
+	rm -rf ./node_modules ./dist
+
+## push: push changes to the remote Git repository
+.PHONY: push
+push: confirm audit no-dirty
+	git push
+
+## production/logs: get the production logs
+.PHONY: production/logs
+production/logs:
+	@for id in $(shell fly machine ls -q); do \
+		fly machine start $$id > /dev/null 2>&1; \
+		fly ssh console --machine $$id -q -C 'cat /mnt/storage/log/nginx/custom_log.json'; \
+	done;
+
+## production/deploy: deploy the application to production
+.PHONY: production/deploy
 production/deploy:
 	fly deploy
+
+## production/open: open the application in production
+.PHONY: production/open
+production/open:
+	$(call OPEN_URL, $(PRODUCTION_URL))
+
+## repo/open: open the remote Git repository
+.PHONY: repo/open
+repo/open:
+	$(call OPEN_URL, $(REPO_URL))
