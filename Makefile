@@ -106,7 +106,7 @@ production/logs:
 
 ## production/deploy: deploy the application to production
 .PHONY: production/deploy
-production/deploy:
+production/deploy: confirm audit no-dirty
 	fly deploy
 
 ## production/open: open the application in production
