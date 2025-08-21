@@ -9,7 +9,9 @@ FROM dev AS build
 RUN npm install
 RUN npm run build
 
-FROM nginx:alpine
+FROM openresty/openresty:alpine-fat
 COPY --from=build /usr/src/app/dist /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/templates/default.conf.template
-
+COPY nginx/default.conf /etc/nginx/templates/default.conf.template
+COPY nginx/entrypoint.sh /usr/local/bin/entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+CMD ["/usr/local/openresty/bin/openresty", "-g", "daemon off;"]
