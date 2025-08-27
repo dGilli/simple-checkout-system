@@ -11,6 +11,8 @@ export function App() {
     const [selectedProducts, setSelectedProducts] = useState<SelectedProduct[]>([]);
     const [activeCategory, setActiveCategory] = useState<string>('all');
     const [searchTerm, setSearchTerm] = useState<string>('');
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string|null>(null);
     // Get unique categories from products
     const categories = useMemo(() => {
         const categoriesSet = new Set(products.map(product => product.category));
@@ -56,6 +58,11 @@ export function App() {
     const handleRemoveProduct = (id: number) => {
         setSelectedProducts(prev => prev.filter(item => item.id !== id));
     };
+    const handlePayment = async () => {
+        setLoading(true);
+        setError(null);
+        alert("checkout");
+    };
     return <div className="flex flex-col min-h-screen md:max-h-screen bg-gray-100 w-full">
         <header className="bg-blue-600 text-white p-4 shadow-md">
             <h1 className="text-2xl font-bold">Simple Checkout System</h1>
@@ -72,7 +79,7 @@ export function App() {
                     {/* Category filter */}
                     <CategoryFilter categories={categories} activeCategory={activeCategory} onSelectCategory={setActiveCategory} />
                 </div>
-                <div class="relative md:bottom-[60px] h-[calc(100%-60px)] md:mt-[76px] overflow-y-scroll"> {/* todo Ew fix it */}
+                <div className="relative md:bottom-[60px] h-[calc(100%-60px)] md:mt-[76px] overflow-y-scroll"> {/* todo Ew fix it */}
                     {/* Product list */}
                     <ProductList products={filteredProducts} onAddProduct={handleAddProduct} />
                 </div>
@@ -83,7 +90,7 @@ export function App() {
                     <h2 className="text-xl font-semibold mb-4">Selected Products</h2>
                     <SelectedProductsList selectedProducts={selectedProducts} onUpdateQuantity={handleUpdateQuantity} onRemoveProduct={handleRemoveProduct} />
                 </div>
-                <TotalDisplay selectedProducts={selectedProducts} />
+                <TotalDisplay selectedProducts={selectedProducts} onCheckout={handlePayment} />
             </div>
         </main>
     </div>;
