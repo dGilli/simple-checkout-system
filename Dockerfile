@@ -13,5 +13,6 @@ FROM openresty/openresty:alpine-fat
 COPY --from=build /usr/src/app/dist /usr/share/nginx/html
 COPY nginx/default.conf /etc/nginx/templates/default.conf.template
 COPY nginx/entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY nginx/lua /usr/local/share/lua
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["/usr/local/openresty/bin/openresty", "-g", "daemon off;"]
