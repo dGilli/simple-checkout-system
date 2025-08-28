@@ -4,6 +4,7 @@ import ProductList from './components/ProductList';
 import CategoryFilter from './components/CategoryFilter';
 import SelectedProductsList from './components/SelectedProductsList';
 import TotalDisplay from './components/TotalDisplay';
+import CheckoutModal from './components/CheckoutModal'
 import { Product, SelectedProduct } from './types';
 import { sampleProducts } from './data/sampleProducts';
 export function App() {
@@ -11,6 +12,7 @@ export function App() {
     const [selectedProducts, setSelectedProducts] = useState<SelectedProduct[]>([]);
     const [activeCategory, setActiveCategory] = useState<string>('all');
     const [searchTerm, setSearchTerm] = useState<string>('');
+    const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false)
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string|null>(null);
     // Get unique categories from products
@@ -58,11 +60,41 @@ export function App() {
     const handleRemoveProduct = (id: number) => {
         setSelectedProducts(prev => prev.filter(item => item.id !== id));
     };
-    const handlePayment = async () => {
-        setLoading(true);
-        setError(null);
-        alert("checkout");
-    };
+    const handleOpenCheckoutModal = () => {
+        setIsCheckoutModalOpen(true)
+    }
+    const handleCloseCheckoutModal = () => {
+        setIsCheckoutModalOpen(false)
+    }
+    const handleCheckout = (method: string, email?: string) => {
+        // Here you would implement actual checkout logic
+        console.log(`Checkout with ${method}`, {
+            email,
+            selectedProducts,
+        })
+        // For demonstration purposes:
+        alert(
+            `Thank you for your purchase!\nPayment Method: ${method}${email ? `\nReceipt will be sent to: ${email}` : ''}`,
+        )
+        // Close modal and clear cart
+        setIsCheckoutModalOpen(false)
+        setSelectedProducts([])
+    }
+    // Calculate totals for checkout modal
+    const { subtotal, itemCount } = useMemo(() => {
+        const subtotal = selectedProducts.reduce(
+            (sum, product) => sum + product.price * product.quantity,
+            0,
+        )
+        const itemCount = selectedProducts.reduce(
+            (count, product) => count + product.quantity,
+            0,
+        )
+        return {
+            subtotal,
+            itemCount,
+        }
+    }, [selectedProducts])
     return <div className="flex flex-col min-h-screen md:max-h-screen bg-gray-100 w-full">
         <header className="bg-blue-600 text-white p-4 shadow-md">
             <h1 className="text-2xl font-bold">Simple Checkout System</h1>
@@ -90,8 +122,9 @@ export function App() {
                     <h2 className="text-xl font-semibold mb-4">Selected Products</h2>
                     <SelectedProductsList selectedProducts={selectedProducts} onUpdateQuantity={handleUpdateQuantity} onRemoveProduct={handleRemoveProduct} />
                 </div>
-                <TotalDisplay selectedProducts={selectedProducts} onCheckout={handlePayment} />
+                <TotalDisplay selectedProducts={selectedProducts} onCompleteSale={handleOpenCheckoutModal} />
             </div>
         </main>
+        <CheckoutModal isOpen={isCheckoutModalOpen} onClose={handleCloseCheckoutModal} total={subtotal} itemCount={itemCount} onCheckout={handleCheckout} />
     </div>;
 }
