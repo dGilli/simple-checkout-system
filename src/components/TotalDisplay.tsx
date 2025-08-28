@@ -2,11 +2,11 @@ import React, { useMemo } from 'react';
 import { SelectedProduct } from '../types';
 interface TotalDisplayProps {
     selectedProducts: SelectedProduct[];
-    onCheckout: (subtotal: number) => void;
+    onCompleteSale: () => void
 }
 const TotalDisplay: React.FC<TotalDisplayProps> = ({
-    selectedProducts,
-    onCheckout
+  selectedProducts,
+  onCompleteSale,
 }) => {
     const {
         subtotal,
@@ -28,7 +28,7 @@ const TotalDisplay: React.FC<TotalDisplayProps> = ({
             <span>Total:</span>
             <span>${subtotal}</span>
         </div>
-        <button onClick={() => onCheckout(subtotal)} disabled={itemCount === 0} className={`w-full py-3 px-4 rounded-md mt-4 font-medium transition-colors ${itemCount === 0 ? 'bg-gray-400 text-gray-200 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600 text-white'}`}>
+        <button onClick={onCompleteSale} disabled={itemCount === 0} className={`w-full py-3 px-4 rounded-md mt-4 font-medium transition-colors ${itemCount === 0 ? 'bg-gray-400 text-gray-200 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600 text-white'}`}>
             Complete Sale
         </button>
     </div>;
