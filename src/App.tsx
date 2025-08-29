@@ -60,6 +60,9 @@ export function App() {
     const handleRemoveProduct = (id: number) => {
         setSelectedProducts(prev => prev.filter(item => item.id !== id));
     };
+    const clearSelectedProducts = () => {
+        setSelectedProducts([]);
+    };
     const handleOpenCheckoutModal = () => {
         setIsCheckoutModalOpen(true)
     }
@@ -119,7 +122,14 @@ export function App() {
             {/* Right side - Selected products and total */}
             <div className="w-full md:w-1/3 flex flex-col gap-4">
                 <div className="bg-white rounded-lg shadow-md p-4 flex-1">
-                    <h2 className="text-xl font-semibold mb-4">Selected Products</h2>
+                    <div className="flex justify-between items-center mb-4">
+                        <h2 className="text-xl font-semibold">Selected Products</h2>
+                        {selectedProducts.length > 0 && (
+                            <button className="m-0 underline text-red-500" onClick={clearSelectedProducts}>
+                                Clear all
+                            </button>
+                        )}
+                    </div>
                     <SelectedProductsList selectedProducts={selectedProducts} onUpdateQuantity={handleUpdateQuantity} onRemoveProduct={handleRemoveProduct} />
                 </div>
                 <TotalDisplay selectedProducts={selectedProducts} onCompleteSale={handleOpenCheckoutModal} />
