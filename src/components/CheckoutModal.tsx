@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { XIcon, CreditCardIcon, BanknoteIcon } from 'lucide-react'
+import { XIcon, BanknoteIcon } from 'lucide-react'
 interface CheckoutModalProps {
     isOpen: boolean
     onClose: () => void
@@ -80,11 +80,45 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <button
                                 onClick={() => handleCheckout('card')}
-                                className="flex items-center justify-center gap-2 bg-blue-600 text-white py-3 px-4 rounded-md hover:bg-blue-700 transition-colors"
+                                className="flex items-center justify-center gap-2 bg-[#262626] text-white py-3 px-4 rounded-md hover:bg-[#323232] transition-colors"
                                 disabled={email !== '' && !isValidEmail}
                             >
-                                <CreditCardIcon size={18} />
-                                Pay with Card
+                                <div className="flex items-center h-0 -ml-2">
+                                    <svg height="30" viewBox="0 0 36 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g clipPath="url(#clip0_1_801)">
+                                            <path d="M29.5902 23.5796C29.5902 23.929 29.3506 24.3483 29.0511 24.518L18.5091 30.6076C18.2096 30.7773 17.7205 30.7773 17.421 30.6076L6.87905 24.518C6.57956 24.3483 6.33997 23.919 6.33997 23.5796V11.4005C6.33997 11.061 6.57956 10.6318 6.87905 10.4621L17.421 4.37249C17.7205 4.20278 18.2096 4.20278 18.5091 4.37249L29.0511 10.4621C29.3506 10.6318 29.5902 11.061 29.5902 11.4005V23.5796Z" fill="white"/>
+                                            <path d="M23.5305 17.51L20.7852 21.5431L19.3677 19.3768L20.9949 16.941C21.2944 16.5017 21.9433 15.3237 21.1945 13.6865C20.5856 12.3688 19.2778 11.7299 18.1298 11.7299C16.9817 11.7299 15.7239 12.3189 15.055 13.6865C14.2963 15.2539 14.9552 16.4818 15.2447 16.8911C15.2447 16.8911 16.1432 18.2188 16.9019 19.3369L18.1298 21.1038L19.9766 23.919C19.9866 23.939 20.2861 24.3882 20.8052 24.3882C21.2944 24.3882 21.6038 23.949 21.6338 23.8891L25.9564 17.5H23.5305V17.51ZM18.1198 17.6098C18.1198 17.6098 17.401 16.5217 16.9318 15.753C16.4327 14.9344 16.9917 13.7065 18.1198 13.7065C19.2479 13.7065 19.8069 14.9244 19.3078 15.753C18.8486 16.5217 18.1198 17.6098 18.1198 17.6098Z" fill="url(#paint0_radial_1_801)"/>
+                                            <path d="M15.4643 21.4133L12.759 17.6098C12.759 17.6098 12.0402 16.5117 11.571 15.753C11.0719 14.9344 11.6309 13.7065 12.759 13.7065C12.8987 13.7065 13.0285 13.7265 13.1583 13.7564L14.1167 12.0094C13.6774 11.8197 13.2182 11.7299 12.7789 11.7299C11.6309 11.7299 10.3731 12.3189 9.70421 13.6865C8.94551 15.2539 9.60438 16.4818 9.89388 16.8911L14.6258 23.8991C14.6657 23.9589 14.9652 24.3982 15.4643 24.3982C15.9735 24.3982 16.263 23.9689 16.2929 23.909L17.7205 21.7328L16.4926 19.9259L15.4643 21.4133Z" fill="url(#paint1_radial_1_801)"/>
+                                        </g>
+                                        <defs>
+                                            <radialGradient id="paint0_radial_1_801" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(11.5358 6.60588) scale(26.2881 26.6277)">
+                                                <stop stopColor="#FFCC00"/>
+                                                <stop offset="0.0915684" stopColor="#FFC800"/>
+                                                <stop offset="0.1739" stopColor="#FFBD00"/>
+                                                <stop offset="0.2528" stopColor="#FFAB00"/>
+                                                <stop offset="0.3295" stopColor="#FF9100"/>
+                                                <stop offset="0.4046" stopColor="#FF7000"/>
+                                                <stop offset="0.4786" stopColor="#FF4700"/>
+                                                <stop offset="0.5503" stopColor="#FF1800"/>
+                                                <stop offset="0.5822" stopColor="#FF0000"/>
+                                                <stop offset="1" stopColor="#FF0000"/>
+                                            </radialGradient>
+                                            <radialGradient id="paint1_radial_1_801" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(9.54728 13.59) scale(11.6671 11.6671)">
+                                                <stop stopColor="#00B4E6"/>
+                                                <stop offset="0.201" stopColor="#00B0E3"/>
+                                                <stop offset="0.3898" stopColor="#01A5DB"/>
+                                                <stop offset="0.5737" stopColor="#0292CD"/>
+                                                <stop offset="0.7546" stopColor="#0377BA"/>
+                                                <stop offset="0.9316" stopColor="#0455A1"/>
+                                                <stop offset="1" stopColor="#054696"/>
+                                            </radialGradient>
+                                            <clipPath id="clip0_1_801">
+                                                <rect width="23.36" height="26.6544" fill="white" transform="translate(6.32001 4.17282)"/>
+                                            </clipPath>
+                                        </defs>
+                                    </svg>
+                                </div>
+                                Pay with Twint
                             </button>
                             <button
                                 onClick={() => handleCheckout('cash')}
