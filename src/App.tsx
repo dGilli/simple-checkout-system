@@ -5,6 +5,7 @@ import CategoryFilter from './components/CategoryFilter';
 import SelectedProductsList from './components/SelectedProductsList';
 import TotalDisplay from './components/TotalDisplay';
 import CheckoutModal from './components/CheckoutModal'
+import ThankYouModal from './components/ThankYouModal'
 import { Product, SelectedProduct } from './types';
 import { sampleProducts } from './data/sampleProducts';
 export function App() {
@@ -13,6 +14,10 @@ export function App() {
     const [activeCategory, setActiveCategory] = useState<string>('all');
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false)
+    const [isThankYouModalOpen, setIsThankYouModalOpen] = useState(false)
+    const [receiptEmail, setReceiptEmail] = useState<string | undefined>(
+        undefined,
+    )
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string|null>(null);
     // Get unique categories from products
@@ -69,18 +74,19 @@ export function App() {
     const handleCloseCheckoutModal = () => {
         setIsCheckoutModalOpen(false)
     }
+    const handleCloseThankYouModal = () => {
+        setIsThankYouModalOpen(false)
+    }
     const handleCheckout = (method: string, email?: string) => {
-        // Here you would implement actual checkout logic
-        console.log(`Checkout with ${method}`, {
-            email,
-            selectedProducts,
-        })
-        // For demonstration purposes:
-        alert(
-            `Thank you for your purchase!\nPayment Method: ${method}${email ? `\nReceipt will be sent to: ${email}` : ''}`,
-        )
-        // Close modal and clear cart
+        setReceiptEmail(email)
         setIsCheckoutModalOpen(false)
+        if (method === 'cash') {
+            setIsThankYouModalOpen(true)
+        } else {
+            alert(
+                `Thank you for your purchase!\nPayment Method: ${method}${email ? `\nReceipt will be sent to: ${email}` : ''}`,
+            )
+        }
         setSelectedProducts([])
     }
     // Calculate totals for checkout modal
@@ -125,7 +131,7 @@ export function App() {
                     <div className="flex justify-between items-center mb-4">
                         <h2 className="text-xl font-semibold">Selected Products</h2>
                         {selectedProducts.length > 0 && (
-                            <button className="m-0 underline text-red-500" onClick={clearSelectedProducts}>
+                            <button className="m-0 underline text-red-500 whitespace-nowrap" onClick={clearSelectedProducts}>
                                 Clear all
                             </button>
                         )}
@@ -136,5 +142,6 @@ export function App() {
             </div>
         </main>
         <CheckoutModal isOpen={isCheckoutModalOpen} onClose={handleCloseCheckoutModal} total={subtotal} itemCount={itemCount} onCheckout={handleCheckout} />
+        <ThankYouModal isOpen={isThankYouModalOpen} onClose={handleCloseThankYouModal} email={receiptEmail} />
     </div>;
 }
