@@ -84,6 +84,14 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                         <h3 className="font-medium">Select payment method:</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <button
+                                onClick={() => handleCheckout('cash')}
+                                className="flex items-center justify-center gap-2 bg-green-600 text-white py-3 px-4 rounded-md hover:bg-green-700 transition-colors"
+                                disabled={email !== '' && !isValidEmail}
+                            >
+                                <BanknoteIcon size={18} />
+                                Pay with Cash
+                            </button>
+                            <button
                                 onClick={() => handleCheckout('card')}
                                 className="flex items-center justify-center gap-2 bg-[#262626] text-white py-3 px-4 rounded-md hover:bg-[#323232] transition-colors"
                                 disabled={email !== '' && !isValidEmail}
@@ -124,14 +132,6 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                                     </svg>
                                 </div>
                                 Pay with Twint
-                            </button>
-                            <button
-                                onClick={() => handleCheckout('cash')}
-                                className="flex items-center justify-center gap-2 bg-green-600 text-white py-3 px-4 rounded-md hover:bg-green-700 transition-colors"
-                                disabled={email !== '' && !isValidEmail}
-                            >
-                                <BanknoteIcon size={18} />
-                                Pay with Cash
                             </button>
                         </div>
                     </div>
