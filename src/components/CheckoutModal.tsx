@@ -92,7 +92,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                                 Pay with Cash
                             </button>
                             <button
-                                onClick={() => handleCheckout('card')}
+                                onClick={() => handleCheckout('twint')}
                                 className="flex items-center justify-center gap-2 bg-[#262626] text-white py-3 px-4 rounded-md hover:bg-[#323232] transition-colors"
                                 disabled={email !== '' && !isValidEmail}
                             >

@@ -5,7 +5,8 @@ import CategoryFilter from './components/CategoryFilter';
 import SelectedProductsList from './components/SelectedProductsList';
 import TotalDisplay from './components/TotalDisplay';
 import CheckoutModal from './components/CheckoutModal'
-import ThankYouModal from './components/ThankYouModal'
+import CashModal from './components/CashModal'
+import TwintModal from './components/TwintModal'
 import { Product, SelectedProduct } from './types';
 import { sampleProducts } from './data/sampleProducts';
 export function App() {
@@ -14,7 +15,8 @@ export function App() {
     const [activeCategory, setActiveCategory] = useState<string>('all');
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false)
-    const [isThankYouModalOpen, setIsThankYouModalOpen] = useState(false)
+    const [isCashModalOpen, setIsCashModalOpen] = useState(false)
+    const [isTwintModalOpen, setIsTwintModalOpen] = useState(false)
     const [receiptEmail, setReceiptEmail] = useState<string | undefined>(
         undefined,
     )
@@ -74,20 +76,24 @@ export function App() {
     const handleCloseCheckoutModal = () => {
         setIsCheckoutModalOpen(false)
     }
-    const handleCloseThankYouModal = () => {
-        setIsThankYouModalOpen(false)
+    const handleCloseCashModal = () => {
+        setIsCashModalOpen(false)
+        setSelectedProducts([])
+    }
+    const handleCloseTwintModal = () => {
+        setIsTwintModalOpen(false)
+        setSelectedProducts([])
     }
     const handleCheckout = (method: string, email?: string) => {
         setReceiptEmail(email)
-        setIsCheckoutModalOpen(false)
+        handleCloseCheckoutModal()
+        console.log("LOG CHECKOUT")
         if (method === 'cash') {
-            setIsThankYouModalOpen(true)
+            setIsCashModalOpen(true)
         } else {
-            alert(
-                `Thank you for your purchase!\nPayment Method: ${method}${email ? `\nReceipt will be sent to: ${email}` : ''}`,
-            )
+            setIsTwintModalOpen(true)
         }
-        setSelectedProducts([])
+        console.log("SEND RECEIPT")
     }
     // Calculate totals for checkout modal
     const { subtotal, itemCount } = useMemo(() => {
@@ -142,6 +148,7 @@ export function App() {
             </div>
         </main>
         <CheckoutModal isOpen={isCheckoutModalOpen} onClose={handleCloseCheckoutModal} total={subtotal} itemCount={itemCount} onCheckout={handleCheckout} />
-        <ThankYouModal isOpen={isThankYouModalOpen} onClose={handleCloseThankYouModal} email={receiptEmail} />
+        <CashModal isOpen={isCashModalOpen} onClose={handleCloseCashModal} total={subtotal} email={receiptEmail} />
+        <TwintModal isOpen={isTwintModalOpen} onClose={handleCloseTwintModal} total={subtotal} email={receiptEmail} />
     </div>;
 }
