@@ -8,7 +8,7 @@ import CheckoutModal from './components/CheckoutModal'
 import CashModal from './components/CashModal'
 import TwintModal from './components/TwintModal'
 import { Product, SelectedProduct } from './types';
-import { sampleProducts } from './data/sampleProducts';
+import { sampleProducts } from './data/products';
 export function App() {
     const [products] = useState<Product[]>(sampleProducts);
     const [selectedProducts, setSelectedProducts] = useState<SelectedProduct[]>([]);
