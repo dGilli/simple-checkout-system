@@ -15,9 +15,9 @@ export default defineConfig({
         },
 
         manifest: {
-            name: 'app',
-            short_name: 'app',
-            description: 'app',
+            name: 'Simple Checkout System',
+            short_name: 'SCS',
+            description: 'A glorified calculator for quick self-checkout',
             theme_color: '#ffffff',
         },
 
