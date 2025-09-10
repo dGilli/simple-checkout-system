@@ -17,7 +17,7 @@ const SelectedProductItem: React.FC<SelectedProductItemProps> = ({
             <div className="w-full mb-1 @xs:w-auto @xs:mb-0">
                 <h4 className="font-medium">{product.name}</h4>
                 <p className="text-sm text-gray-500">
-                    ${product.price.toFixed(2)} each
+                    {product.price.toFixed(2)} Fr. pro Stück
                 </p>
             </div>
             <div className="flex items-center space-x-2">
@@ -33,7 +33,7 @@ const SelectedProductItem: React.FC<SelectedProductItemProps> = ({
                     </button>
                 </div>
                 <div className="min-w-[60px] text-right font-medium">
-                    ${totalPrice.toFixed(2)}
+                    {totalPrice.toFixed(2)} Fr.
                 </div>
             </div>
         </div>

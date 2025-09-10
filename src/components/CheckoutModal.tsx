@@ -41,7 +41,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" onClick={handleBackdropClick}>
             <div className="bg-white rounded-lg shadow-lg w-full max-w-md">
                 <div className="flex justify-between items-center p-4 border-b">
-                    <h2 className="text-xl font-semibold">Complete Your Purchase</h2>
+                    <h2 className="text-xl font-semibold">Schliessen Sie Ihren Kauf ab</h2>
                     <button
                         onClick={onClose}
                         className="text-gray-500 hover:text-gray-700"
@@ -53,18 +53,18 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                 <div className="p-6">
                     <div className="mb-6">
                         <p className="mb-4">
-                            You're about to complete a purchase of {itemCount}{' '}
-                            {itemCount === 1 ? 'item' : 'items'} for a total of{' '}
-                            <span className="font-bold">${total.toFixed(2)}</span>.
+                            Sie sind dabei, einen Kauf von {itemCount}{' '}
+                            {itemCount === 1 ? 'Artikel' : 'Artikeln'} für insgesamt{' '}
+                            <span className="font-bold">{total.toFixed(2)} Fr.</span> abzuschliessen.
                         </p>
                         <p className="text-gray-600">
-                            Please select your preferred payment method below. If you'd like
-                            to receive a receipt, enter your email address.
+                            Bitte wählen Sie unten Ihre bevorzugte Zahlungsmethode aus.
+                            Wenn Sie eine Quittung erhalten möchten, geben Sie bitte Ihre E-Mail-Adresse ein.
                         </p>
                     </div>
                     <div className="mb-6">
                         <label htmlFor="email" className="block mb-2 text-sm font-medium">
-                            Email for receipt (optional)
+                            E-Mail für die Quittung (optional):
                         </label>
                         <input
                             type="email"
@@ -76,12 +76,12 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                         />
                         {!isValidEmail && (
                             <p className="mt-1 text-sm text-red-500">
-                                Please enter a valid email address
+                                Bitte geben Sie eine gültige E-Mail-Adresse ein
                             </p>
                         )}
                     </div>
                     <div className="space-y-4">
-                        <h3 className="font-medium">Select payment method:</h3>
+                        <h3 className="font-medium">Wählen Sie die Zahlungsmethode:</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <button
                                 onClick={() => handleCheckout('cash')}
@@ -89,14 +89,14 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                                 disabled={email !== '' && !isValidEmail}
                             >
                                 <BanknoteIcon size={18} />
-                                Pay with Cash
+                                Bar bezahlen
                             </button>
                             <button
                                 onClick={() => handleCheckout('twint')}
                                 className="flex items-center justify-center gap-2 bg-[#262626] text-white py-3 px-4 rounded-md hover:bg-[#323232] transition-colors"
                                 disabled={email !== '' && !isValidEmail}
                             >
-                                <div className="flex items-center h-0 -ml-2">
+                                <div className="flex items-center h-0 -ml-1">
                                     <svg height="30" viewBox="0 0 36 35" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g clipPath="url(#clip0_1_801)">
                                             <path d="M29.5902 23.5796C29.5902 23.929 29.3506 24.3483 29.0511 24.518L18.5091 30.6076C18.2096 30.7773 17.7205 30.7773 17.421 30.6076L6.87905 24.518C6.57956 24.3483 6.33997 23.919 6.33997 23.5796V11.4005C6.33997 11.061 6.57956 10.6318 6.87905 10.4621L17.421 4.37249C17.7205 4.20278 18.2096 4.20278 18.5091 4.37249L29.0511 10.4621C29.3506 10.6318 29.5902 11.061 29.5902 11.4005V23.5796Z" fill="white"/>
@@ -131,7 +131,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                                         </defs>
                                     </svg>
                                 </div>
-                                Pay with Twint
+                                Mit TWINT bezahlen
                             </button>
                         </div>
                     </div>
@@ -141,7 +141,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                         onClick={onClose}
                         className="w-full py-2 px-4 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100 transition-colors"
                     >
-                        Cancel
+                        Abbrechen
                     </button>
                 </div>
             </div>

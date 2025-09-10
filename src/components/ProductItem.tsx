@@ -16,9 +16,9 @@ const ProductItem: React.FC<ProductItemProps> = ({
         </div>
         <div className="flex justify-between items-center mt-4">
             <span className="text-lg font-semibold">
-                ${product.price.toFixed(2)}
+                {product.price.toFixed(2)} Fr.
             </span>
-            <button className="bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 transition-colors" aria-label={`Add ${product.name} to cart`}>
+            <button className="bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 transition-colors" aria-label={`${product.name} in den Warenkorb legen`}>
                 <PlusIcon size={18} />
             </button>
         </div>

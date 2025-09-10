@@ -12,7 +12,7 @@ import { sampleProducts } from './data/sampleProducts';
 export function App() {
     const [products] = useState<Product[]>(sampleProducts);
     const [selectedProducts, setSelectedProducts] = useState<SelectedProduct[]>([]);
-    const [activeCategory, setActiveCategory] = useState<string>('all');
+    const [activeCategory, setActiveCategory] = useState<string>('alle');
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [isCheckoutModalOpen, setIsCheckoutModalOpen] = useState(false)
     const [isCashModalOpen, setIsCashModalOpen] = useState(false)
@@ -25,12 +25,12 @@ export function App() {
     // Get unique categories from products
     const categories = useMemo(() => {
         const categoriesSet = new Set(products.map(product => product.category));
-        return ['all', ...Array.from(categoriesSet)];
+        return ['alle', ...Array.from(categoriesSet)];
     }, [products]);
     // Filter products based on category and search term
     const filteredProducts = useMemo(() => {
         return products.filter(product => {
-            const matchesCategory = activeCategory === 'all' || product.category === activeCategory;
+            const matchesCategory = activeCategory === 'alle' || product.category === activeCategory;
             const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
             return matchesCategory && matchesSearch;
         });
@@ -120,7 +120,7 @@ export function App() {
                 <div className="mb-4 flex flex-col sm:flex-row gap-4">
                     {/* Search bar */}
                     <div className="relative flex-1">
-                        <input type="text" placeholder="Search products..." className="w-full p-2 pl-10 border border-gray-300 rounded-md" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
+                        <input type="text" placeholder="Produkte suchen..." className="w-full p-2 pl-10 border border-gray-300 rounded-md" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
                         <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
                     </div>
                     {/* Category filter */}
@@ -135,10 +135,10 @@ export function App() {
             <div className="w-full md:w-1/3 flex flex-col gap-4">
                 <div className="bg-white rounded-lg shadow-md p-4 flex-1">
                     <div className="flex justify-between items-center mb-4">
-                        <h2 className="text-xl font-semibold">Selected Products</h2>
+                        <h2 className="text-xl font-semibold">Ausgewählte Produkte</h2>
                         {selectedProducts.length > 0 && (
-                            <button className="m-0 underline text-red-500 whitespace-nowrap" onClick={clearSelectedProducts}>
-                                Clear all
+                            <button className="m-0 underline text-red-500 text-sm" onClick={clearSelectedProducts} aria-label="Alle löschen">
+                                Alle löschen
                             </button>
                         )}
                     </div>

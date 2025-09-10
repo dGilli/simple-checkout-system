@@ -13,7 +13,7 @@ const SelectedProductsList: React.FC<SelectedProductsListProps> = ({
 }) => {
     if (selectedProducts.length === 0) {
         return <div className="text-center py-8 text-gray-500">
-            No products selected yet.
+            Noch keine Produkte ausgewählt.
         </div>;
     }
     return <div className="space-y-3 max-h-[calc(100vh-350px)] overflow-y-auto">
