@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { XIcon, BanknoteIcon } from 'lucide-react'
 interface CheckoutModalProps {
     isOpen: boolean
@@ -16,6 +16,12 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
 }) => {
     const [email, setEmail] = useState('')
     const [isValidEmail, setIsValidEmail] = useState(true)
+    useEffect(() => {
+        if (isOpen) {
+            setEmail('')
+            setIsValidEmail(true)
+        }
+    }, [isOpen])
     if (!isOpen) return null
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value
