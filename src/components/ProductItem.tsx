@@ -9,7 +9,7 @@ const ProductItem: React.FC<ProductItemProps> = ({
     product,
     onAddProduct
 }) => {
-    return <div onClick={() => onAddProduct(product)} className="h-fit bg-white border border-gray-200 rounded-lg shadow-sm p-4 flex flex-col justify-between">
+    return <div onClick={() => onAddProduct(product)} className="h-full bg-white border border-gray-200 rounded-lg shadow-sm p-4 flex flex-col justify-between">
         <div>
             <h3 className="font-medium text-lg">{product.name}</h3>
             <p className="text-gray-500 text-sm capitalize">{product.category}</p>
