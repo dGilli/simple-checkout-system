@@ -69,9 +69,11 @@ export function App() {
     };
     const clearSelectedProducts = () => {
         setSelectedProducts([]);
+        setActiveCategory("alle");
     };
     const handleOpenCheckoutModal = () => {
         setIsCheckoutModalOpen(true)
+        setActiveCategory("alle");
     }
     const handleCloseCheckoutModal = () => {
         setIsCheckoutModalOpen(false)
