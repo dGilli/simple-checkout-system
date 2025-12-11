@@ -1,6 +1,6 @@
 APP_NAME = simple-checkout-system
+PRODUCTION_URL = https://$(APP_NAME).fly.dev
 REPO_URL = https://github.com/dGilli/$(APP_NAME)
-PRODUCTION_URL = https://simple-checkout-system.fly.dev
 DEV_PORT = 3000
 DEV_URL = http://localhost:$(DEV_PORT)
 DEV_BROWSER = cr
@@ -61,7 +61,7 @@ dev:
 	if [ ! "$$(docker ps -qf name=${APP_NAME})" ]; then \
 		test $$(docker image list -aqf reference=$(APP_NAME)) || docker build -t $(APP_NAME) . --target dev; \
 		test $$(docker container ls -aqf name=$(APP_NAME)) && docker container rm -f $(APP_NAME); \
-		docker run --rm -itp $(DEV_PORT):$(DEV_PORT) -v $(PWD):/usr/src/app --env-file .env --name $(APP_NAME) $(APP_NAME) dev $(DEV_PORT); \
+		docker run --rm -itp $(DEV_PORT):$(DEV_PORT) -v $(PWD):/usr/src/app --name $(APP_NAME) $(APP_NAME) dev $(DEV_PORT); \
 	fi
 
 ## dev/logs: connect to running application logs
