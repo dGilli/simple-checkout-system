@@ -9,6 +9,8 @@ import CashModal from './components/CashModal'
 import TwintModal from './components/TwintModal'
 import { Product, SelectedProduct } from './types';
 import { sampleProducts } from './data/products';
+import { logger } from './logger'
+import { mailer } from './mailer'
 export function App() {
     const [products] = useState<Product[]>(sampleProducts);
     const [selectedProducts, setSelectedProducts] = useState<SelectedProduct[]>([]);
@@ -86,16 +88,69 @@ export function App() {
         setIsTwintModalOpen(false)
         setSelectedProducts([])
     }
-    const handleCheckout = (method: string, email?: string) => {
+    const handleCheckout = async (method: string, email?: string) => {
         setReceiptEmail(email)
         handleCloseCheckoutModal()
-        console.log("LOG CHECKOUT")
+        try {
+            const resp = await fetch("/log", {
+                method: "POST",
+                body: JSON.stringify({ method, itemCount, subtotal, email, selectedProducts }),
+            });
+            if (!resp.ok) {
+                throw new Error(`Response status: ${resp.status}`);
+            }
+        } catch (error) {
+            const result = error
+            console.error('Failed to log:', error);
+        }
         if (method === 'cash') {
             setIsCashModalOpen(true)
         } else {
             setIsTwintModalOpen(true)
         }
-        console.log("SEND RECEIPT")
+        if (email) {
+            const form = new FormData()
+            const data: ReceiptMessage = {
+                from: "Good Life Lounge <no-reply@mg.dennisgilli.com>",
+                to: email,
+                subject: "Good Life Lounge Quittung",
+                text: `Vielen Dank für den Einkauf! Hier sind die Einzelheiten Ihrer Transaktion:
+
+Zahlungsmethode: ${method.charAt(0).toUpperCase() + method.substring(1).toLowerCase()}
+Produkte: ${selectedProducts.map(p => `${p.name}${p.quantity > 1 ? ` (${p.quantity})` : ''}`).join(", ")}
+Total: ${subtotal.toFixed(2)} Fr.
+
+Bei Fragen stehen wir Ihnen gerne zur Verfügung.
+
+Mit freundlichen Grüssen,
+euer Good Life Lounge Team
+`,
+            }
+            for (const key in data) {
+                if (Array.isArray(data[key])) {
+                    form.append(key, JSON.stringify(data[key]))
+                } else {
+                    form.append(key, data[key])
+                }
+            }
+            if (import.meta.env.MODE === 'development') {
+                console.log("SEND RECEIPT: ", form);
+            } else {
+                try {
+                    const resp = await fetch("/messages", {
+                        method: "POST",
+                        body: form,
+                    });
+                    if (!resp.ok) {
+                        throw new Error(`Response status: ${resp.status}`);
+                    }
+                    const result = await resp.json();
+                } catch (error) {
+                    const result = error
+                    console.error('Failed to send email:', error);
+                }
+            }
+        }
     }
     // Calculate totals for checkout modal
     const { subtotal, itemCount } = useMemo(() => {

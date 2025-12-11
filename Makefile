@@ -101,7 +101,7 @@ push: confirm audit no-dirty
 production/logs:
 	@for id in $(shell fly machine ls -q); do \
 		fly machine start $$id > /dev/null 2>&1; \
-		fly ssh console --machine $$id -q -C 'cat /mnt/storage/log/nginx/custom_log.json'; \
+		fly ssh console --machine $$id -q -C 'cat /mnt/storage/logs/custom_log.json'; \
 	done;
 
 ## production/deploy: deploy the application to production
