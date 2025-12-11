@@ -88,7 +88,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                     </div>
                     <div className="space-y-4">
                         <h3 className="font-medium">Wählen Sie die Zahlungsmethode:</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <button
                                 onClick={() => handleCheckout('cash')}
                                 className="flex items-center justify-center gap-2 bg-green-600 text-white py-3 px-4 rounded-md hover:bg-green-700 transition-colors"
@@ -99,7 +99,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
                             </button>
                             <button
                                 onClick={() => handleCheckout('twint')}
-                                className="flex items-center justify-center gap-2 bg-[#262626] text-white py-3 px-4 rounded-md hover:bg-[#323232] transition-colors"
+                                className="flex items-center justify-center gap-2 bg-[#262626] saturate-50 text-white py-3 px-4 rounded-md hover:bg-[#323232] transition-colors"
                                 disabled={email !== '' && !isValidEmail}
                             >
                                 <div className="flex items-center h-0 -ml-1">

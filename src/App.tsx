@@ -112,13 +112,13 @@ export function App() {
             itemCount,
         }
     }, [selectedProducts])
-    return <div className="flex flex-col min-h-screen md:max-h-screen bg-gray-100 w-full">
+    return <div className="flex flex-col min-h-screen sm:max-h-screen bg-gray-100 w-full">
         <header className="bg-blue-600 text-white p-4 shadow-md">
             <h1 className="text-2xl font-bold">Simple Checkout System</h1>
         </header>
-        <main className="flex flex-col md:flex-row flex-1 h-full p-4 gap-4 overflow-y-hidden">
+        <main className="flex flex-col sm:flex-row flex-1 h-full p-4 gap-4 overflow-y-hidden">
             {/* Left side - Product selection */}
-            <div className="w-full md:w-2/3 bg-white rounded-lg shadow-md p-4 overflow-hidden">
+            <div className="w-full sm:w-2/3 bg-white rounded-lg shadow-md p-4 overflow-hidden">
                 <div className="mb-4 flex flex-col sm:flex-row gap-4">
                     {/* Search bar */}
                     <div className="relative flex-1">
@@ -128,13 +128,13 @@ export function App() {
                     {/* Category filter */}
                     <CategoryFilter categories={categories} activeCategory={activeCategory} onSelectCategory={setActiveCategory} />
                 </div>
-                <div className="relative md:bottom-[60px] h-[calc(100%-60px)] md:mt-[76px] overflow-y-scroll"> {/* todo Ew fix it */}
+                <div className="relative bottom-[60px] h-[calc(100%-60px)] sm:mt-[76px] overflow-y-scroll"> {/* todo Ew fix it */}
                     {/* Product list */}
                     <ProductList products={filteredProducts} onAddProduct={handleAddProduct} />
                 </div>
             </div>
             {/* Right side - Selected products and total */}
-            <div className="w-full md:w-1/3 flex flex-col gap-4">
+            <div className="w-full sm:w-1/3 flex flex-col gap-4">
                 <div className="bg-white rounded-lg shadow-md p-4 flex-1">
                     <div className="flex justify-between items-center mb-4">
                         <h2 className="text-xl font-semibold">Ausgewählte Produkte</h2>
