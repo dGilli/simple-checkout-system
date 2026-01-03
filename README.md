@@ -28,5 +28,5 @@ Setup the required environment variables:
 - [x] Installable PWA
 - [ ] Inventory management
 - [ ] Offline ready
-- [ ] Transaction logging
-- [ ] Twint integration
+- [x] Transaction logging
+- [x] Twint integration
